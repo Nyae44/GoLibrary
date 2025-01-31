@@ -1,0 +1,33 @@
+package services
+
+import (
+	"github.com/nyae44/GoLibrary/internal/models"
+	"github.com/nyae44/GoLibrary/internal/repositories"
+)
+
+type bookService struct {
+	bookRepo repositories.BookRepository
+}
+
+func NewBookService(bookRepo repositories.BookRepository) *bookService {
+	return &bookService{bookRepo: bookRepo}
+}
+func (s *bookService) CreateBook(book *models.Book) error {
+	return s.bookRepo.Create(book)
+}
+
+func (s *bookService) GetBookByID(id uint) (*models.Book, error) {
+	return s.bookRepo.FindById(id)
+}
+
+func (s *bookService) UpdateBook(book *models.Book) error {
+	return s.bookRepo.Update(book)
+}
+
+func (s *bookService) DeleteBook(id uint) error {
+	return s.bookRepo.DeleteById(id)
+}
+
+func (s *bookService) ListBooks() ([]*models.Book, error) {
+	return s.bookRepo.FindAll()
+}

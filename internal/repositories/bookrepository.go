@@ -8,8 +8,9 @@ import (
 type BookRepository interface {
 	Create(book *models.Book) error
 	FindById(id uint) (*models.Book, error)
-	Update(book *models.Book) error
+	Update(book *models.Book) (error, error)
 	DeleteById(id uint) error
+	FindAll() ([]*models.Book, error)
 }
 
 type bookRepository struct {
@@ -29,10 +30,16 @@ func (r *bookRepository) FindById(id uint) (*models.Book, error) {
 	return &book, err
 }
 
-func (r *bookRepository) Update(book *models.Book) error {
-	return r.db.Save(book).Error
+func (r *bookRepository) Update(book *models.Book) (error, error) {
+	return r.db.Save(book).Error, nil
 }
 
 func (r *bookRepository) DeleteById(id uint) error {
 	return r.db.Delete(&models.Book{}, id).Error
+}
+
+func (r *bookRepository) FindAll() ([]*models.Book, error) {
+	var books []*models.Book
+	err := r.db.Find(&books).Error
+	return books, err
 }

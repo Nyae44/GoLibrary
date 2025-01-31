@@ -8,7 +8,7 @@ import (
 type TransactionRepository interface {
 	Create(transaction *models.Transaction) (*models.Transaction, error)
 	Delete(id int) error
-	FindById(id int) (*models.Transaction, error)
+	FindById(id uint) (*models.Transaction, error)
 	FindAll() ([]*models.Transaction, error)
 	Update(transaction *models.Transaction) (*models.Transaction, error)
 	FindByMember(memberId int) ([]*models.Transaction, error)
@@ -40,7 +40,7 @@ func (r *transactionRepository) Delete(id int) error {
 	return nil
 }
 
-func (r *transactionRepository) FindById(id int) (*models.Transaction, error) {
+func (r *transactionRepository) FindById(id uint) (*models.Transaction, error) {
 	transaction := &models.Transaction{}
 	result := r.db.First(transaction, id)
 	if result.Error != nil {

@@ -18,4 +18,5 @@ type Transaction struct {
 	ActualReturnDate time.Time `gorm:"not null" json:"actual_return_date"`
 	FeesCharged      float64   `gorm:"not null" json:"fees_charged"`
 	Penalty          float64   `gorm:"not null" json:"penalty"`
+	Type             string    `gorm:"not null" json:"type"`
 }
