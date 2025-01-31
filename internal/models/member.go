@@ -12,6 +12,7 @@ type Member struct {
 	PhoneNumber string  `gorm:"unique" json:"phone_number"`
 	Email       string  `gorm:"unique" json:"email"`
 	RentalDebt  float64 `gorm:"default:0" json:"rental_debt"`
+	Balance     float64 `gorm:"default:0" json:"balance"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
