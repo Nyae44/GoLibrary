@@ -87,3 +87,28 @@ func (s *transactionService) ReturnBook(transaction *models.Transaction) error {
 	_, err = s.transactionRepo.Create(returnTransaction)
 	return err
 }
+
+func (s *transactionService) GetTransactionByID(transactionID uint) (*models.Transaction, error) {
+	return s.transactionRepo.FindById(transactionID)
+}
+
+func (s *transactionService) UpdateTransaction(transaction *models.Transaction) error {
+	transaction, err := s.transactionRepo.FindById(transaction.ID)
+	if err != nil {
+		return errors.New("transaction not found")
+	}
+	if transaction.Type != "Return" {
+		return errors.New("invalid transaction type")
+	}
+	return err
+}
+
+func (s *transactionService) ListAllTransactions() ([]*models.Transaction, error) {
+	return s.transactionRepo.FindAll()
+}
+func (s *transactionService) GetTransactionByMemberID(memberID uint) (*models.Transaction, error) {
+	return s.transactionRepo.FindById(memberID)
+}
+func (s *transactionService) GetTransactionByBookID(bookID uint) (*models.Transaction, error) {
+	return s.transactionRepo.FindById(bookID)
+}
