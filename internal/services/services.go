@@ -18,10 +18,12 @@ type MemberService interface {
 }
 
 type TransactionService interface {
-	BorrowBook(book *models.Book) error
-	ReturnBook(book *models.Book) error
+	BorrowBook(transaction *models.Transaction) (*models.Transaction, error)
+	ReturnBook(transaction *models.Transaction) error
 	GetTransactionByID(id uint) (*models.Transaction, error)
 	ListTransactions() ([]models.Transaction, error)
+	GetTransactionsByMember(memberID uint) ([]models.Transaction, error)
+	GetTransactionsByBook(bookID uint) ([]models.Transaction, error)
 }
 
 type UserService interface {
