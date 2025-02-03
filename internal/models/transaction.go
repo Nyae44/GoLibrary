@@ -7,11 +7,11 @@ import (
 
 type Transaction struct {
 	gorm.Model
-	UserID           uint      `gorm:"not null" json:"user_id"`
+	UserID           int       `gorm:"not null" json:"user_id"`
 	User             User      `gorm:"foreignkey:UserID" json:"user"`
-	MemberID         uint      `gorm:"not null" json:"member_id"`
+	MemberID         int       `gorm:"not null" json:"member_id"`
 	Member           Member    `gorm:"foreignkey:MemberID" json:"member"`
-	BookID           uint      `gorm:"not null" json:"book_id"`
+	BookID           int       `gorm:"not null" json:"book_id"`
 	Book             Book      `gorm:"foreignkey:BookID" json:"book"`
 	IssueDate        time.Time `gorm:"not null" json:"issue_date"`
 	ReturnDate       time.Time `gorm:"not null" json:"return_date"`

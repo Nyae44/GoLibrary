@@ -18,7 +18,7 @@ func NewTransactionService(transactionRepo repositories.TransactionRepository, b
 
 func (s *transactionService) BorrowBook(transaction *models.Transaction) (*models.Transaction, error) {
 	// Check if book exists and is available
-	book, err := s.bookRepo.FindById(transaction.BookID)
+	book, err := s.bookRepo.FindById(uint(transaction.BookID))
 	if err != nil {
 		return nil, errors.New("book not found")
 	}
@@ -27,7 +27,7 @@ func (s *transactionService) BorrowBook(transaction *models.Transaction) (*model
 	}
 
 	// Check if member exists
-	member, err := s.memberRepo.GetById(transaction.BookID)
+	member, err := s.memberRepo.GetById(uint(transaction.BookID))
 	if err != nil {
 		return nil, errors.New("member not found")
 	}
@@ -55,7 +55,7 @@ func (s *transactionService) BorrowBook(transaction *models.Transaction) (*model
 
 func (s *transactionService) ReturnBook(transaction *models.Transaction) error {
 	// Find the transaction
-	transaction, err := s.transactionRepo.FindById(transaction.ID)
+	transaction, err := s.transactionRepo.FindById(int(transaction.ID))
 	if err != nil {
 		return errors.New("transaction not found")
 	}
@@ -66,7 +66,7 @@ func (s *transactionService) ReturnBook(transaction *models.Transaction) error {
 	}
 
 	// Find the book
-	book, err := s.bookRepo.FindById(transaction.BookID)
+	book, err := s.bookRepo.FindById(uint(transaction.BookID))
 	if err != nil {
 		return errors.New("book not found")
 	}
@@ -88,12 +88,12 @@ func (s *transactionService) ReturnBook(transaction *models.Transaction) error {
 	return err
 }
 
-func (s *transactionService) GetTransactionByID(transactionID uint) (*models.Transaction, error) {
+func (s *transactionService) GetTransactionByID(transactionID int) (*models.Transaction, error) {
 	return s.transactionRepo.FindById(transactionID)
 }
 
 func (s *transactionService) UpdateTransaction(transaction *models.Transaction) error {
-	transaction, err := s.transactionRepo.FindById(transaction.ID)
+	transaction, err := s.transactionRepo.FindById(int(transaction.ID))
 	if err != nil {
 		return errors.New("transaction not found")
 	}
@@ -107,8 +107,8 @@ func (s *transactionService) ListAllTransactions() ([]*models.Transaction, error
 	return s.transactionRepo.FindAll()
 }
 func (s *transactionService) GetTransactionByMemberID(memberID uint) (*models.Transaction, error) {
-	return s.transactionRepo.FindById(memberID)
+	return s.transactionRepo.FindById(int(memberID))
 }
 func (s *transactionService) GetTransactionByBookID(bookID uint) (*models.Transaction, error) {
-	return s.transactionRepo.FindById(bookID)
+	return s.transactionRepo.FindById(int(bookID))
 }
