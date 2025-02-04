@@ -12,15 +12,15 @@ type bookService struct {
 func NewBookService(bookRepo repositories.BookRepository) *bookService {
 	return &bookService{bookRepo: bookRepo}
 }
-func (s *bookService) CreateBook(book *models.Book) error {
-	return s.bookRepo.Create(book)
+func (s *bookService) CreateBook(book *models.Book) (error, error) {
+	return s.bookRepo.Create(book), nil
 }
 
 func (s *bookService) GetBookByID(id uint) (*models.Book, error) {
 	return s.bookRepo.FindById(id)
 }
 
-func (s *bookService) UpdateBook(book *models.Book) error {
+func (s *bookService) UpdateBook(book *models.Book) (error, error) {
 	return s.bookRepo.Update(book)
 }
 
