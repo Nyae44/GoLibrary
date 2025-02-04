@@ -3,9 +3,9 @@ package services
 import "github.com/nyae44/GoLibrary/internal/models"
 
 type BookService interface {
-	CreateBook(book *models.Book) error
+	CreateBook(book *models.Book) (*models.Book, error)
 	GetBookByID(id string) (*models.Book, error)
-	UpdateBook(book *models.Book) error
+	UpdateBook(book *models.Book) (*models.Book, error)
 	DeleteBook(id uint) error
 	ListBooks() ([]models.Book, error)
 }
