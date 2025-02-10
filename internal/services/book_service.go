@@ -20,8 +20,12 @@ func (s *bookService) GetBookByID(id uint) (*models.Book, error) {
 	return s.bookRepo.FindById(id)
 }
 
-func (s *bookService) UpdateBook(book *models.Book) (error, error) {
-	return s.bookRepo.Update(book)
+func (s *bookService) UpdateBook(book *models.Book) (*models.Book, error) {
+	err, _ := s.bookRepo.Update(book)
+	if err != nil {
+		return nil, err
+	}
+	return book, nil
 }
 
 func (s *bookService) DeleteBook(id uint) error {

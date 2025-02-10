@@ -49,7 +49,7 @@ func (h *TransactionHandler) HandleReturnBook(w http.ResponseWriter, r *http.Req
 		return
 	}
 
-	transaction, err := h.transactionService.GetTransactionByID(request.TransactionID)
+	transaction, err := h.transactionService.GetTransactionByID(int(request.TransactionID))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
@@ -73,7 +73,7 @@ func (h *TransactionHandler) HandleTransactionByID(w http.ResponseWriter, r *htt
 		return
 	}
 
-	transaction, err := h.transactionService.GetTransactionByID(uint(id))
+	transaction, err := h.transactionService.GetTransactionByID(int(uint(id)))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -102,7 +102,7 @@ func (h *TransactionHandler) HandleGetTransactionByMember(w http.ResponseWriter,
 		http.Error(w, "Invalid member ID", http.StatusBadRequest)
 		return
 	}
-	transactions, err := h.transactionService.GetTransactionsByMember(uint(memberID))
+	transactions, err := h.transactionService.GetTransactionsByMember(int(uint(memberID)))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

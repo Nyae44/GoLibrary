@@ -44,7 +44,7 @@ func (h *BookHandler) HandleGetBookByID(w http.ResponseWriter, r *http.Request) 
 		http.Error(w, "Invalid book ID", http.StatusBadRequest)
 	}
 
-	book, err := h.booksService.GetBookByID(string(rune(id)))
+	book, err := h.booksService.GetBookByID(uint(id))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
