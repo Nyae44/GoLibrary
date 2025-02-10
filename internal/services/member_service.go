@@ -13,20 +13,21 @@ func NewMemberService(memberRepo repositories.MemberRepository) *memberService {
 	return &memberService{memberRepo: memberRepo}
 }
 
-func (s *memberService) CreateMember(member *models.Member) error {
+func (s *memberService) CreateMember(member *models.Member) (*models.Member, error) {
 	err := s.memberRepo.Create(member)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return member, nil
+
 }
 
-func (s *memberService) UpdateMember(member *models.Member) error {
+func (s *memberService) UpdateMember(member *models.Member) (*models.Member, error) {
 	err, _ := s.memberRepo.Update(member)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return member, nil
 }
 
 func (s *memberService) DeleteMember(id uint) error {
@@ -37,7 +38,7 @@ func (s *memberService) DeleteMember(id uint) error {
 
 	return nil
 }
-func (s *memberService) GetMember(id uint) (*models.Member, error) {
+func (s *memberService) GetMemberByID(id uint) (*models.Member, error) {
 	return s.memberRepo.GetById(id)
 }
 

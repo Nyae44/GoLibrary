@@ -103,12 +103,15 @@ func (s *transactionService) UpdateTransaction(transaction *models.Transaction) 
 	return err
 }
 
-func (s *transactionService) ListAllTransactions() ([]*models.Transaction, error) {
+func (s *transactionService) ListTransactions() ([]*models.Transaction, error) {
 	return s.transactionRepo.FindAll()
 }
-func (s *transactionService) GetTransactionByMemberID(memberID uint) (*models.Transaction, error) {
-	return s.transactionRepo.FindById(int(memberID))
+func (s *transactionService) GetTransactionByMemberID(memberID int) (*models.Transaction, error) {
+	return s.transactionRepo.FindById(memberID)
 }
-func (s *transactionService) GetTransactionByBookID(bookID uint) (*models.Transaction, error) {
+func (s *transactionService) GetTransactionsByBook(bookID uint) (*models.Transaction, error) {
 	return s.transactionRepo.FindById(int(bookID))
+}
+func (s *transactionService) GetTransactionsByMember(memberID int) ([]*models.Transaction, error) {
+	return s.transactionRepo.FindByMember(memberID)
 }

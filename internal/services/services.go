@@ -3,27 +3,27 @@ package services
 import "github.com/nyae44/GoLibrary/internal/models"
 
 type BookService interface {
-	CreateBook(book *models.Book) (*models.Book, error)
-	GetBookByID(id string) (*models.Book, error)
+	CreateBook(book *models.Book) (error, error)
+	GetBookByID(id uint) (*models.Book, error)
 	UpdateBook(book *models.Book) (*models.Book, error)
 	DeleteBook(id uint) error
-	ListBooks() ([]models.Book, error)
+	ListBooks() ([]*models.Book, error)
 }
 type MemberService interface {
-	CreateMember(member *models.Member) error
-	GetMemberByID(id string) (*models.Member, error)
-	UpdateMember(member *models.Member) error
+	CreateMember(member *models.Member) (*models.Member, error)
+	GetMemberByID(id uint) (*models.Member, error)
+	UpdateMember(member *models.Member) (*models.Member, error)
 	DeleteMember(id uint) error
-	ListMembers() ([]models.Member, error)
+	ListMembers() ([]*models.Member, error)
 }
 
 type TransactionService interface {
 	BorrowBook(transaction *models.Transaction) (*models.Transaction, error)
 	ReturnBook(transaction *models.Transaction) error
-	GetTransactionByID(id uint) (*models.Transaction, error)
-	ListTransactions() ([]models.Transaction, error)
-	GetTransactionsByMember(memberID uint) ([]models.Transaction, error)
-	GetTransactionsByBook(bookID uint) ([]models.Transaction, error)
+	GetTransactionByID(id int) (*models.Transaction, error)
+	ListTransactions() ([]*models.Transaction, error)
+	GetTransactionsByMember(memberID int) ([]*models.Transaction, error)
+	GetTransactionsByBook(bookID uint) (*models.Transaction, error)
 }
 
 type UserService interface {

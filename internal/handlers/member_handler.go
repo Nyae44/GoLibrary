@@ -67,7 +67,7 @@ func (h *MemberHandler) HandleGetMemberByID(w http.ResponseWriter, r *http.Reque
 	if err != nil {
 		http.Error(w, "Invalid member ID", http.StatusBadRequest)
 	}
-	member, err := h.memberService.GetMemberByID(string(rune(id)))
+	member, err := h.memberService.GetMemberByID(uint(id))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
