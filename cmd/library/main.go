@@ -1,4 +1,4 @@
-package library
+package main
 
 import (
 	"github.com/nyae44/GoLibrary/internal/handlers"
@@ -12,7 +12,8 @@ import (
 )
 
 func main() {
-	db, err := gorm.Open(postgres.Open("library.db"), &gorm.Config{})
+	dsn := "host=localhost user=daley password=postgres dbname=postgres port=5432"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to database")
 	}
