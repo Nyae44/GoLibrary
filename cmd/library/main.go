@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	dsn := "host=localhost user=daley password=postgres dbname=postgres port=5432"
+	dsn := "host=localhost user=postgres password=example dbname=postgres port=5432"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to database")
@@ -38,9 +38,24 @@ func main() {
 	transactionHandler := handlers.NewTransactionHandler(transactionService)
 
 	// Routes
-	http.HandleFunc("/books", bookHandler.HandleCreateBook)
-	http.HandleFunc("/members", memberHandler.HandleCreateMember)
+	// Books
+	http.HandleFunc("/books/create-book", bookHandler.HandleCreateBook)
+	http.HandleFunc("/books/{id}", bookHandler.HandleGetBookByID)
+	http.HandleFunc("books/update-book", bookHandler.HandleUpdateBook)
+	http.HandleFunc("/books/delete-book", bookHandler.HandleDeleteBook)
+
+	// Members
+	http.HandleFunc("/members/create-member", memberHandler.HandleCreateMember)
+	http.HandleFunc("/members/{id}", memberHandler.HandleGetMemberByID)
+	http.HandleFunc("/members/update-member", memberHandler.HandleUpdateMember)
+	http.HandleFunc("/members", memberHandler.HandleListMembers)
+	//http.HandleFunc("members/delete-member", memberHandler.HandleDeleteMember)
+
+	//Transactions
 	http.HandleFunc("/transactions", transactionHandler.HandleGetTransactions)
+	http.HandleFunc("/transactions/{id}", transactionHandler.HandleTransactionByID)
+	http.HandleFunc("/transaction/borrow", transactionHandler.HandleBorrowBook)
+	http.HandleFunc("/transaction/return", transactionHandler.HandleReturnBook)
 
 	log.Println("Starting server on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))

@@ -81,7 +81,7 @@ func (h *MemberHandler) HandleGetMemberByID(w http.ResponseWriter, r *http.Reque
 
 }
 
-//HandleListMembers to handles requests to get all members
+//HandleListMembers to handle requests to get all members
 
 func (h *MemberHandler) HandleListMembers(w http.ResponseWriter, r *http.Request) {
 	member, err := h.memberService.ListMembers()
@@ -95,4 +95,20 @@ func (h *MemberHandler) HandleListMembers(w http.ResponseWriter, r *http.Request
 	if err != nil {
 		return
 	}
+}
+
+// HandleDeleteMember to handle requests to delete a member
+func (h *MemberHandler) HandleDeleteMember(w http.ResponseWriter, r *http.Request) {
+	idStr := r.URL.Query().Get("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "Invalid member ID", http.StatusBadRequest)
+		return
+	}
+	err = h.memberService.DeleteMember(uint(id))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
 }
